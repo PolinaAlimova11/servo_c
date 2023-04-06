@@ -1,0 +1,1 @@
+Inc/stm32f10x.o: ../Inc/stm32f10x.s
