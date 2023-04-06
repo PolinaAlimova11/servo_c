@@ -30,10 +30,6 @@
 .global g_pfnVectors
 .global Default_Handler
 
-.include "stm32f10x.s"
-.include "macro.s"
-
-
 /* start address for the initialization values of the .data section.
 defined in linker script */
 .word _sidata
@@ -61,27 +57,48 @@ defined in linker script */
 Reset_Handler:
   ldr   r0, =_estack
   mov   sp, r0          /* set stack pointer */
+/* Call the clock system initialization function.*/
+  bl  SystemInit
 
-	ldr	r0, =PERIPH_BB_BASE+ \
-				(RCC_APB2ENR-PERIPH_BASE)*32 + \
-				4*4
-	mov		r1, #1
-	str		r1, [r0]
+/* Copy the data segment initializers from flash to SRAM */
+  ldr r0, =_sdata
+  ldr r1, =_edata
+  ldr r2, =_sidata
+  movs r3, #0
+  b LoopCopyDataInit
 
-	ldr	r0, =GPIOC_CRL
-	mov		r1, #0x03
-	ldr		r2, [r0]
-	bfi		r2, r1, #28, #4
-	str		r2, [r0]
+CopyDataInit:
+  ldr r4, [r2, r3]
+  str r4, [r0, r3]
+  adds r3, r3, #4
 
-	ldr	r0, =GPIOC_BSRR
+LoopCopyDataInit:
+  adds r4, r0, r3
+  cmp r4, r1
+  bcc CopyDataInit
 
-loop:
+/* Zero fill the bss segment. */
+  ldr r2, =_sbss
+  ldr r4, =_ebss
+  movs r3, #0
+  b LoopFillZerobss
 
-	mov32 	r1, #GPIO_BSRR_BS7					@ устанавливаем вывод в '1'
-	str 	r1, [r0]
+FillZerobss:
+  str  r3, [r2]
+  adds r2, r2, #4
 
-	b loop
+LoopFillZerobss:
+  cmp r2, r4
+  bcc FillZerobss
+
+/* Call static constructors */
+  bl __libc_init_array
+/* Call the application's entry point.*/
+  bl main
+
+LoopForever:
+    b LoopForever
+
   .size Reset_Handler, .-Reset_Handler
 
 /**

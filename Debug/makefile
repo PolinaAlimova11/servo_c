@@ -10,7 +10,7 @@ RM := rm -rf
 # All of the sources participating in the build are defined here
 -include sources.mk
 -include Startup/subdir.mk
--include Inc/subdir.mk
+-include Src/subdir.mk
 -include objects.mk
 
 ifneq ($(MAKECMDGOALS),clean)
@@ -33,34 +33,34 @@ $(wildcard ../makefile.init) \
 $(wildcard ../makefile.targets) \
 
 
-BUILD_ARTIFACT_NAME := lab1_dub2
+BUILD_ARTIFACT_NAME := lab2_3
 BUILD_ARTIFACT_EXTENSION := elf
 BUILD_ARTIFACT_PREFIX :=
 BUILD_ARTIFACT := $(BUILD_ARTIFACT_PREFIX)$(BUILD_ARTIFACT_NAME)$(if $(BUILD_ARTIFACT_EXTENSION),.$(BUILD_ARTIFACT_EXTENSION),)
 
 # Add inputs and outputs from these tool invocations to the build variables 
 EXECUTABLES += \
-lab1_dub2.elf \
+lab2_3.elf \
 
 MAP_FILES += \
-lab1_dub2.map \
+lab2_3.map \
 
 SIZE_OUTPUT += \
 default.size.stdout \
 
 OBJDUMP_LIST += \
-lab1_dub2.list \
+lab2_3.list \
 
 
 # All Target
 all: main-build
 
 # Main-build Target
-main-build: lab1_dub2.elf secondary-outputs
+main-build: lab2_3.elf secondary-outputs
 
 # Tool invocations
-lab1_dub2.elf lab1_dub2.map: $(OBJS) $(USER_OBJS) E:\bmstu\7\ sem\Leonidov\lab1_dub2\STM32F103RBTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "lab1_dub2.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"E:\bmstu\7 sem\Leonidov\lab1_dub2\STM32F103RBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="lab1_dub2.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+lab2_3.elf lab2_3.map: $(OBJS) $(USER_OBJS) E:\bmstu\7\ sem\Leonidov\lab2_3\STM32F103RBTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "lab2_3.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"E:\bmstu\7 sem\Leonidov\lab2_3\STM32F103RBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="lab2_3.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -69,14 +69,14 @@ default.size.stdout: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
 	@echo 'Finished building: $@'
 	@echo ' '
 
-lab1_dub2.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "lab1_dub2.list"
+lab2_3.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "lab2_3.list"
 	@echo 'Finished building: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) default.size.stdout lab1_dub2.elf lab1_dub2.list lab1_dub2.map
+	-$(RM) default.size.stdout lab2_3.elf lab2_3.list lab2_3.map
 	-@echo ' '
 
 secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST)

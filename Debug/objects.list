@@ -1,3 +1,4 @@
-"./Inc/macro.o"
-"./Inc/stm32f10x.o"
+"./Src/main.o"
+"./Src/syscalls.o"
+"./Src/sysmem.o"
 "./Startup/startup_stm32f103rbtx.o"

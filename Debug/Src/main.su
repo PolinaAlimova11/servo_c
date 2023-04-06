@@ -1,0 +1,14 @@
+E:/bmstu/7 sem/Leonidov/lab2_3/CMSIS/Include/core_cm3.h:1511:22:__NVIC_EnableIRQ	16	static
+E:/bmstu/7 sem/Leonidov/lab2_3/CMSIS/Include/core_cm3.h:1639:22:__NVIC_SetPriority	16	static
+../Src/main.c:14:6:TIM2_IRQHandler	8	static
+../Src/main.c:40:6:USART2_IRQHandler	16	static
+../Src/main.c:57:6:delay	24	static
+../Src/main.c:62:6:EXTI15_10_IRQHandler	8	static
+../Src/main.c:80:6:init_port	4	static
+../Src/main.c:90:6:init_button	8	static
+../Src/main.c:116:6:initClk	4	static
+../Src/main.c:156:6:init_tim2	8	static
+../Src/main.c:172:6:init_uart2	8	static
+../Src/main.c:199:6:txStr	32	static
+../Src/main.c:213:6:ExecuteCom	24	static
+../Src/main.c:277:5:main	8	static
